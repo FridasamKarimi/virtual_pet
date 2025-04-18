@@ -1,45 +1,51 @@
 class Pet:
     def __init__(self, name):
         self.name = name
-        self.hunger = 10
-        self.energy = 10
-        self.happiness = 10
+        self.hunger = 5
+        self.energy = 5
+        self.happiness = 5
         self.tricks = []
     
+    def _adjust_attribute(self, attr, change, min_val=0, max_val=10):
+        """adjust attributes"""
+        current = getattr(self, attr)
+        setattr(self, attr, max(min_val, min(max_val, current + change)))
+    
     def eat(self):
-
-        self.hunger = max(0, self.hunger -3)
-        self.happiness = min(10, self.happiness + 1)
-
+        self._adjust_attribute('hunger', -3)
+        self._adjust_attribute('happiness', 1)
+        print(f"{self.name} says YUM!")
+    
     def sleep(self):
-        self.energy = min(10, self.energy + 5)
-
+        self._adjust_attribute('energy', 5)
+        print(f"{self.name} time to catch some zzzZZZ...")
+    
     def play(self):
-
-        self.energy = max(0, self.energy - 2)
-        self.happiness = min(10, self.happiness + 2)
-        self.hunger = min(10, self.hunger +1)
-
+        if self.energy >= 2:
+            self._adjust_attribute('energy', -2)
+            self._adjust_attribute('happiness', 2)
+            self._adjust_attribute('hunger', 1)
+            print(f"{self.name} plays ;moving up and down, and all over the place!")
+        else:
+            print(f"{self.name} is too tired to play")
+    
     def get_status(self):
-        """Prints the current state of the pet"""
-        print(f"{self.name}'s Status:")
-        print(f"Hunger: {self.hunger}/10")
-        print(f"Energy: {self.energy}/10")
-        print(f"Happiness: {self.happiness}/10")
-
+        print(f"\n{self.name}'s Status:")
+        for attr in ['hunger', 'energy', 'happiness']:
+            value = getattr(self, attr)
+            print(f"{attr.capitalize()}: {'▮' * value}{'▯' * (10 - value)} {value}/10")
+    
+    # Training day
     def train(self, trick):
-        """Teaches the pet a new trick if not already known"""
-        if trick not in self.tricks:
+        if trick.lower() in [t.lower() for t in self.tricks]:
+            print(f"{self.name} already knows '{trick}'!")
+        else:
             self.tricks.append(trick)
-            print(f"{self.name} learned {trick}!")
-        else:
-            print(f"{self.name} already knows {trick}!")
-
+            self._adjust_attribute('happiness', 1)
+            print(f"{self.name} learned '{trick}'! Good job!")
+    
     def show_tricks(self):
-        """Prints all learned tricks"""
-        if self.tricks:
-            print(f"{self.name} knows these tricks:")
-            for trick in self.tricks:
-                print(f"- {trick}")
+        if not self.tricks:
+            print(f"{self.name} hasn't learned any tricks yet.")
         else:
-            print(f"{self.name} doesn't know any tricks yet.")
+            print(f"{self.name}'s tricks: {', '.join(self.tricks)}")
