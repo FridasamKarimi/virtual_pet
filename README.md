@@ -78,6 +78,19 @@ Fluffy munches happily! 🍖
 
 ---
 
+## **🤝 Contributing**
+
+Want to improve this project?
+
+1. Fork the repo
+2. Create a new branch (git checkout -b feature/new-trick)
+3. Commit changes (git commit -m "Add fetch trick")
+4. Push to branch (git push origin feature/new-trick)
+5. Open a Pull Request
+
+---
+
+
 ## **📜 License**  
 This project is licensed under **MIT**.  
 Feel free to use, modify, and share!  
